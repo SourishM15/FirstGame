@@ -1,7 +1,14 @@
+<<<<<<< HEAD
 package com.main;
 
 import java.util.Random;
 
+=======
+package com.main;
+
+import java.util.Random;
+
+>>>>>>> c96298b (Small Bug Fixes)
 public class Spawn {
 
     private static final int MAX_ENEMIES = 18;
@@ -10,8 +17,13 @@ public class Spawn {
     private Handler handler;
     private HUD hud;
     private int scoreKeep = 0;
+<<<<<<< HEAD
     private Random r = new Random();
 
+=======
+    private Random r = new Random();
+
+>>>>>>> c96298b (Small Bug Fixes)
     public Spawn(Handler handler, HUD hud) {
         this.handler = handler;
         this.hud = hud;

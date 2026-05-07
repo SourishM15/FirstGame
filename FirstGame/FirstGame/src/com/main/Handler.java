@@ -56,6 +56,50 @@ public class Handler {
 
     public int getObjectCount() {
         return ob.size() + pendingAdd.size() - pendingRemove.size();
+<<<<<<< HEAD
+=======
+    }
+
+    public int getEnemyCount() {
+        int count = 0;
+        for(int i = 0; i < ob.size(); i++) {
+            if(isEnemy(ob.get(i))) {
+                count++;
+            }
+        }
+        for(int i = 0; i < pendingAdd.size(); i++) {
+            if(isEnemy(pendingAdd.get(i))) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int getObjectCountByID(ID id) {
+        int count = 0;
+        for(int i = 0; i < ob.size(); i++) {
+            if(ob.get(i).getID() == id) {
+                count++;
+            }
+        }
+        for(int i = 0; i < pendingAdd.size(); i++) {
+            if(pendingAdd.get(i).getID() == id) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private void flushChanges() {
+        if(!pendingRemove.isEmpty()) {
+            ob.removeIf(pendingRemove::contains);
+            pendingRemove.clear();
+        }
+        if(!pendingAdd.isEmpty()) {
+            ob.addAll(pendingAdd);
+            pendingAdd.clear();
+        }
+>>>>>>> c96298b (Small Bug Fixes)
     }
 
     public int getEnemyCount() {

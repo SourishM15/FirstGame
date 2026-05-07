@@ -7,13 +7,20 @@ import java.io.Serial;
 
 
 public class Game extends Canvas implements Runnable {
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> c96298b (Small Bug Fixes)
     @Serial
     private static final long serialVersionUID = 1550691097823471818L;
     public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
     private static final double TICKS_PER_SECOND = 60.0;
     private static final double MAX_FRAMES_PER_SECOND = 120.0;
+<<<<<<< HEAD
 
+=======
+>>>>>>> c96298b (Small Bug Fixes)
     public enum State {
         Menu,
         Game,
@@ -105,7 +112,11 @@ public class Game extends Canvas implements Runnable {
             e.printStackTrace();
         }
     }
+<<<<<<< HEAD
 
+=======
+
+>>>>>>> c96298b (Small Bug Fixes)
     public void run() {
         long lastTime = System.nanoTime();
         long lastRenderTime = lastTime;
@@ -142,8 +153,13 @@ public class Game extends Canvas implements Runnable {
                 System.out.println("FPS: " + frames + " | Objects: " + handler.getObjectCount() + " | Enemies: " + handler.getEnemyCount());
                 frames = 0;
             }
+<<<<<<< HEAD
 
         }
+=======
+
+        }
+>>>>>>> c96298b (Small Bug Fixes)
         stop();
     }
 
