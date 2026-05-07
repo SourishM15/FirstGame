@@ -11,6 +11,8 @@ public class Game extends Canvas implements Runnable {
     @Serial
     private static final long serialVersionUID = 1550691097823471818L;
     public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
+    private static final double TICKS_PER_SECOND = 60.0;
+    private static final double MAX_FRAMES_PER_SECOND = 120.0;
     public enum State {
         Menu,
         Game,
@@ -105,32 +107,51 @@ public class Game extends Canvas implements Runnable {
 
     public void run() {
         long lastTime = System.nanoTime();
-        double amountOfTicks = 60.0;
-        double ns = 1000000000 / amountOfTicks;
-        double delta = 0;
+        long lastRenderTime = lastTime;
+        double tickNs = 1000000000 / TICKS_PER_SECOND;
+        double renderNs = 1000000000 / MAX_FRAMES_PER_SECOND;
+        double tickDelta = 0;
         long timer = System.currentTimeMillis();
         int frames = 0;
         running = true;
         while(running){
             long now = System.nanoTime();
-            delta += (now - lastTime) / ns;
+            tickDelta += (now - lastTime) / tickNs;
             lastTime = now;
-            while(delta >= 1) {
+
+            while(tickDelta >= 1) {
                 tick();
-                delta--;
+                tickDelta--;
             }
-            if(running)
+
+            boolean rendered = false;
+            if(running && now - lastRenderTime >= renderNs) {
                 render();
-            frames++;
+                frames++;
+                lastRenderTime = now;
+                rendered = true;
+            }
+
+            if(!rendered) {
+                sleep();
+            }
 
             if(System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                System.out.println("FPS: " + frames);
+                System.out.println("FPS: " + frames + " | Objects: " + handler.getObjectCount() + " | Enemies: " + handler.getEnemyCount());
                 frames = 0;
             }
 
         }
         stop();
+    }
+
+    private void sleep() {
+        try {
+            Thread.sleep(1);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     private void tick() {

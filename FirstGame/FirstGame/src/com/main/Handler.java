@@ -54,6 +54,40 @@ public class Handler {
         pendingRemove.clear();
     }
 
+    public int getObjectCount() {
+        return ob.size() + pendingAdd.size() - pendingRemove.size();
+    }
+
+    public int getEnemyCount() {
+        int count = 0;
+        for(int i = 0; i < ob.size(); i++) {
+            if(isEnemy(ob.get(i))) {
+                count++;
+            }
+        }
+        for(int i = 0; i < pendingAdd.size(); i++) {
+            if(isEnemy(pendingAdd.get(i))) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    public int getObjectCountByID(ID id) {
+        int count = 0;
+        for(int i = 0; i < ob.size(); i++) {
+            if(ob.get(i).getID() == id) {
+                count++;
+            }
+        }
+        for(int i = 0; i < pendingAdd.size(); i++) {
+            if(pendingAdd.get(i).getID() == id) {
+                count++;
+            }
+        }
+        return count;
+    }
+
     private void flushChanges() {
         if(!pendingRemove.isEmpty()) {
             ob.removeIf(pendingRemove::contains);
@@ -76,6 +110,10 @@ public class Handler {
             }
             ob.set(j + 1, current);
         }
+    }
+
+    private boolean isEnemy(GameObject object) {
+        return object.getID() == ID.BasicEnemy || object.getID() == ID.FastEnemy || object.getID() == ID.TrackEnemy;
     }
 
 }
