@@ -6,10 +6,12 @@ import java.awt.event.KeyEvent;
 public class KeyInput extends KeyAdapter {
 
     private Handler handler;
+    private Game game;
     private boolean[] keyDown = new boolean[4];
 
-    public KeyInput(Handler handler) {
+    public KeyInput(Handler handler, Game game) {
         this.handler = handler;
+        this.game = game;
 
         keyDown[0] = false;
         keyDown[1] = false;
@@ -20,6 +22,35 @@ public class KeyInput extends KeyAdapter {
 
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
+
+        if(key == KeyEvent.VK_ESCAPE) {
+            System.exit(0);
+        }
+        if(key == KeyEvent.VK_ENTER && Game.gameState == Game.State.Menu) {
+            game.startGame();
+            return;
+        }
+        if(key == KeyEvent.VK_R && Game.gameState != Game.State.Menu) {
+            game.startGame();
+            return;
+        }
+        if(key == KeyEvent.VK_P) {
+            if(Game.gameState == Game.State.Game) {
+                stopMovement();
+                game.setShooting(false);
+                Game.gameState = Game.State.Paused;
+            } else if(Game.gameState == Game.State.Paused) {
+                Game.gameState = Game.State.Game;
+            }
+            return;
+        }
+        if(Game.gameState != Game.State.Game) {
+            return;
+        }
+        if(key == KeyEvent.VK_SPACE) {
+            game.setShooting(true);
+            return;
+        }
 
         for(int i = 0; i < handler.ob.size(); i++) {
             GameObject tempObject = handler.ob.get(i);
@@ -46,12 +77,18 @@ public class KeyInput extends KeyAdapter {
             }
 
         }
-
-        if(key == KeyEvent.VK_ESCAPE) System.exit(1);
     }
 
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
+
+        if(key == KeyEvent.VK_SPACE) {
+            game.setShooting(false);
+            return;
+        }
+        if(Game.gameState != Game.State.Game) {
+            return;
+        }
 
         for(int i = 0; i < handler.ob.size(); i++) {
             GameObject tempObject = handler.ob.get(i);
@@ -78,6 +115,19 @@ public class KeyInput extends KeyAdapter {
                 if(!keyDown[2] && !keyDown[3]) {
                     tempObject.setVelX(0);
                 }
+            }
+        }
+    }
+
+    private void stopMovement() {
+        for(int i = 0; i < keyDown.length; i++) {
+            keyDown[i] = false;
+        }
+        for(int i = 0; i < handler.ob.size(); i++) {
+            GameObject tempObject = handler.ob.get(i);
+            if(tempObject.getID() == ID.Player) {
+                tempObject.setVelX(0);
+                tempObject.setVelY(0);
             }
         }
     }

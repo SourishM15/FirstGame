@@ -14,22 +14,29 @@ public class Spawn {
         this.hud = hud;
     }
 
+    public void reset() {
+        scoreKeep = 0;
+    }
+
     public void tick() {
         scoreKeep++;
 
         if(scoreKeep >= 500) {
             scoreKeep = 0;
             hud.setLevel(hud.getLevel() + 1);
-            if(hud.getLevel() == 1) {
-                handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.BasicEnemy, handler));
-            } else if(hud.getLevel() == 2) {
+            if(hud.getLevel() == 2) {
                 handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.BasicEnemy, handler));
             } else if(hud.getLevel() == 3) {
                 handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.FastEnemy, handler));
             } else if(hud.getLevel() == 4) {
                 handler.addObject(new TrackEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.TrackEnemy, handler));
+            } else if(hud.getLevel() % 3 == 0) {
+                handler.addObject(new TrackEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.TrackEnemy, handler));
+            } else if(hud.getLevel() % 2 == 0) {
+                handler.addObject(new FastEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.FastEnemy, handler));
+            } else {
+                handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH - 50), r.nextInt(Game.HEIGHT - 50), ID.BasicEnemy, handler));
             }
-            //handler.addObject(new BasicEnemy(r.nextInt(Game.WIDTH), r.nextInt(Game.HEIGHT), ID.BasicEnemy, handler));
         }
     }
 }

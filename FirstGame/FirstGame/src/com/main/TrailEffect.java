@@ -35,7 +35,7 @@ public class TrailEffect extends GameObject {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setComposite(makeTransparent(alpha));
         g.setColor(color);
-        g.fillRect(x, y, width, height);
+        g.fillOval(x, y, width, height);
         g2d.setComposite(makeTransparent(1));
     }
 
