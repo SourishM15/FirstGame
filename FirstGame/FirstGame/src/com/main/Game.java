@@ -13,6 +13,7 @@ public class Game extends Canvas implements Runnable {
     public static final int WIDTH = 640, HEIGHT = WIDTH / 12 * 9;
     private static final double TICKS_PER_SECOND = 60.0;
     private static final double MAX_FRAMES_PER_SECOND = 120.0;
+
     public enum State {
         Menu,
         Game,

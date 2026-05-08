@@ -88,16 +88,6 @@ public class Handler {
         return count;
     }
 
-    private void flushChanges() {
-        if(!pendingRemove.isEmpty()) {
-            ob.removeIf(pendingRemove::contains);
-            pendingRemove.clear();
-        }
-        if(!pendingAdd.isEmpty()) {
-            ob.addAll(pendingAdd);
-            pendingAdd.clear();
-        }
-    }
 
     private void sortByDepth() {
         for(int i = 1; i < ob.size(); i++) {
